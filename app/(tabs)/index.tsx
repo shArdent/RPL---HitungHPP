@@ -14,6 +14,7 @@ export default Page
 const styles = StyleSheet.create({
     contaner : {
         flex : 1,
+        flexDirection : 'column',
         justifyContent : 'center',
         alignItems : 'center',
     }
