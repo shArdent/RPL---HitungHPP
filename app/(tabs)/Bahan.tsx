@@ -1,15 +1,15 @@
-import { View, Text , StyleSheet } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 
-const Page = () => {
+const BahanPage = () => {
   return (
     <View style={styles.contaner}>
-      <Text>Home Screen</Text>
+      <Text>BahanPage</Text>
     </View>
   )
 }
 
-export default Page
+export default BahanPage
 
 const styles = StyleSheet.create({
     contaner : {
