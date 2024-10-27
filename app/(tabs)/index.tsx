@@ -1,38 +1,79 @@
-import { Text, StyleSheet, ScrollView, Pressable } from "react-native";
-import React from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { Text, StyleSheet, Pressable, TextInput, View } from "react-native";
+import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import safeView from "@/constant/saveView";
-import AddNew from "../AddNew";
 import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
+import { initDb, showTable } from "@/lib/db";
+import { FlatList } from "react-native-gesture-handler";
 
 const Page = () => {
-  const data = ["Produk 1", "Produk 2", "Produk 4", "Produk 5", "Produk 6"];
+  const data = [
+    "Produk 1",
+    "Produk 2",
+    "Produk 4",
+    "Produk 5",
+    "Produk 6",
+    "produk 7",
+    "produk 8",
+  ];
   const navigation = useNavigation();
+  const router = useRouter();
+  const [filteredData, setFilteredData] = useState<any[]>(data);
+
+  const handleSearch = (e: string) => {
+    const query = e.trim().toLowerCase();
+    setFilteredData(data.filter((item) => item.toLowerCase().includes(query)));
+  };
+
+  useEffect(() => {
+    initDb();
+    showTable();
+  }, []);
 
   return (
-    <SafeAreaView style={safeView}>
+    <View style={{ flex: 1, padding: 10, backgroundColor : "transparent" }}>
       <Pressable
         style={styles.AddNew}
-        onPress={() => navigation.navigate("AddNew")}
+        onPress={() =>
+          router.navigate({
+            pathname: "/AddNew",
+          })
+        }
       >
         <Ionicons name="add" size={40} color="black" />
         <Text>Add New</Text>
       </Pressable>
-      <ScrollView style={safeView}>
-        {data.map((item, index) => (
+      <View style={{  backgroundColor : "transparent", position : "absolute", top : 10, left : 10, flexDirection : "row", zIndex : 10, width : "100%" }}>
+        <TextInput
+          placeholder="Cari Produk"
+          style={styles.filterInput}
+          underlineColorAndroid={"transparent"}
+          onChangeText={(e) => handleSearch(e)}
+        />
+        <Ionicons name="search" size={20} color="black" style={styles.icon} />
+      </View>
+
+      <FlatList
+        data={filteredData}
+        contentContainerStyle={{ gap: 12, paddingTop : 67 }}
+        showsVerticalScrollIndicator={false}
+        renderItem={({ item }) => (
           <Pressable
-            onPress={() =>
-              navigation.navigate("DetailProduk/[id]", { id: item })
-            }
             style={styles.child}
-            key={index}
+            onPress={() =>
+              router.navigate({
+                pathname: "/DetailProduct",
+                params: {
+                  name: item,
+                },
+              })
+            }
           >
             <Text>{item}</Text>
           </Pressable>
-        ))}
-      </ScrollView>
-    </SafeAreaView>
+        )}
+      />
+    </View>
   );
 };
 
@@ -40,17 +81,13 @@ export default Page;
 
 const styles = StyleSheet.create({
   child: {
-    marginBottom: 10,
-    marginHorizontal: 10,
+    gap: 10,
     backgroundColor: "#FFF",
-    elevation : 6,
+    elevation: 3,
     padding: 10,
     justifyContent: "center",
     alignItems: "center",
     height: 200,
-  },
-  buttonsContainer: {
-    padding: 10,
   },
   AddNew: {
     position: "absolute",
@@ -64,6 +101,20 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     justifyContent: "center",
     alignItems: "center",
-    borderWidth: .3,
+    borderWidth: 0.3,
+  },
+  filterInput: {
+    backgroundColor: "#FFF",
+    padding: 10,
+    borderRadius: 30,
+    borderWidth: 0.3,
+    paddingHorizontal: 27,
+    width: "100%",
+  },
+
+  icon: {
+    position: "absolute",
+    right: 27,
+    top: 13,
   },
 });

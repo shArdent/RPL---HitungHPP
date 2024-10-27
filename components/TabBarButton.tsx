@@ -5,6 +5,7 @@ import { Ionicons } from "@expo/vector-icons";
 const icon: any = {
     index: (props: any) => <Ionicons name={"list"} size={24} {...props} />,
     Bahan: (props: any) => <Ionicons name={"fast-food"} size={24} {...props} />,
+    History: (props: any) => <Ionicons name={"calendar"} size={24} {...props} />,
   };
 
 const TabBarButton = ({

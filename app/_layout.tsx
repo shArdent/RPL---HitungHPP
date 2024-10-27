@@ -9,7 +9,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "react-native-reanimated";
-import DetailProduk from "./DetailProduk/[id]";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -31,13 +31,13 @@ export default function RootLayout() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      {/* content */}
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        {/* <Stack.Screen name="DetailProduk" options={{ headerShown: false }} /> */}
-        <Stack.Screen name="DetailProduk/[id]" options={{ headerShown: false }} />
-        <Stack.Screen name="AddNew" options={{ headerShown: false }} />
-      </Stack>
+      <SafeAreaView style={{ flex: 1 }}>
+        <Stack>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="DetailProduct" options={{ headerShown: false }} />
+          <Stack.Screen name="AddNew" options={{ headerShown: false }} />
+        </Stack>
+      </SafeAreaView>
     </GestureHandlerRootView>
   );
 }

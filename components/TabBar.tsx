@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
   tabBar: {
     paddingHorizontal: 20,
     paddingVertical: 15,
+    marginHorizontal : 60,
     position: "absolute",
     bottom: 40,
     flexDirection: "row",
@@ -63,7 +64,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFF",
     borderRadius: 35,
     height: "auto",
-    width: 250,
+    width: "auto",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
